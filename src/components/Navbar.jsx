@@ -9,7 +9,7 @@ const Navbar = () => (
     </div>
     <ul className="flex gap-6 text-lg font-medium">
       <li><Link to="/">Home</Link></li>
-      <li><Link to="/about">About</Link></li>
+      <li><Link to="/about">About Us</Link></li>
       <li><Link to="/services">Services</Link></li>
       <li><Link to="/portfolio">Portfolio</Link></li>
       <li><Link to="/blogs">Blog</Link></li>

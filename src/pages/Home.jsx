@@ -1,46 +1,144 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import 'animate.css';
 
-const testimonials = [
-  { name: 'John Doe', quote: "Elite Events took away all my stress!" },
-  { name: 'Priya C.', quote: "Our company event was flawless." }
+const bgVideos = [
+  '/videos/event1.mp4',
+  '/videos/event2.mp4',
+  '/videos/event3.mp4'
 ];
 
-const Home = () => (
-  <section className="py-12 px-4">
-    <div className="flex flex-col items-center justify-center mb-10">
-      <h1 className="text-4xl md:text-6xl font-extrabold text-pink-600 mb-4">Unforgettable Events, Perfectly Planned</h1>
-      <p className="mb-8 text-lg mx-auto max-w-xl text-gray-800">
-        Trusted professionals for stylish weddings, corporate events, and celebrations.
-      </p>
-      <a href="/contact" className="bg-pink-600 text-white py-3 px-8 rounded-lg shadow hover:bg-pink-700 transition">Get A Quote</a>
-    </div>
-    <div className="my-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div className="bg-white rounded shadow p-4 text-center">
-        <h3 className="font-bold text-pink-700 mb-2">Weddings</h3>
-        <p>Venue, Decor, Artist Management</p>
-      </div>
-      <div className="bg-white rounded shadow p-4 text-center">
-        <h3 className="font-bold text-pink-700 mb-2">Corporate Events</h3>
-        <p>Conferences, Launches, Team Building</p>
-      </div>
-      <div className="bg-white rounded shadow p-4 text-center">
-        <h3 className="font-bold text-pink-700 mb-2">Private Parties</h3>
-        <p>Birthdays, Anniversaries, Celebrations</p>
-      </div>
-    </div>
-    <div className="my-8 bg-gray-100 rounded p-6 text-center">
-      <div className="text-sm font-medium text-gray-600">100+ Events Managed • Trusted by 50+ Companies • Across 5 Countries</div>
-    </div>
-    <div className="max-w-xl mx-auto my-8">
-      <h3 className="font-bold text-xl mb-4 text-pink-700">Testimonials</h3>
-      {testimonials.map((t, i) => (
-        <div key={i} className="border-l-4 border-pink-300 pl-4 mb-3">
-          <p className="italic">&quot;{t.quote}&quot;</p>
-          <span className="block text-sm text-gray-700 font-medium mt-1">-- {t.name}</span>
-        </div>
-      ))}
-    </div>
-  </section>
-);
+const galleryImgs = [
+  '/images/img1.jpg',
+  '/images/img2.jpg',
+  '/images/img3.jpg'
+];
 
-export default Home;
+export default function Home() {
+  const [currentVideo, setCurrentVideo] = useState(0);
+
+  useEffect(() => {
+    AOS.init({ duration: 1200, delay: 200 });
+  }, []);
+
+  // Video switching on scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      const sectionHeight = window.innerHeight * 0.8;
+      const scrollPos = window.scrollY;
+      const vidIndex = Math.min(Math.floor(scrollPos / sectionHeight), bgVideos.length - 1);
+      setCurrentVideo(vidIndex);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return (
+    <div className="homepage-container">
+      {/* Background Video Section */}
+      <div className="bg-video-wrapper">
+        <video
+          src={bgVideos[currentVideo]}
+          autoPlay
+          loop
+          muted
+          playsInline
+          controls={false}
+          className="bg-video"
+          style={{ pointerEvents: 'none' }}
+          onError={() => console.log('Video failed to load!')}
+        />
+        <div className="bg-overlay" />
+      </div>
+
+      {/* Hero Section */}
+      <header className="hero-text animate__animated animate__fadeInDown">
+        <h1>Unforgettable Events, Perfectly Planned</h1>
+        <p>Trusted professionals for stylish weddings, corporate events, and celebrations.</p>
+        <button className="cta-btn" data-aos="zoom-in">Get A Quote</button>
+      </header>
+
+      {/* Service Cards */}
+      <div className="service-cards">
+        <div className="card" data-aos="fade-up">
+          <h2>Weddings</h2>
+          <p>Venue, Decor, Artist Management</p>
+        </div>
+        <div className="card" data-aos="fade-up" data-aos-delay="100">
+          <h2>Corporate Events</h2>
+          <p>Conferences, Launches, Team Building</p>
+        </div>
+        <div className="card" data-aos="fade-up" data-aos-delay="200">
+          <h2>Private Parties</h2>
+          <p>Birthdays, Anniversaries, Celebrations</p>
+        </div>
+      </div>
+
+      {/* Animated Statistic */}
+      <div className="count-section" data-aos="fade-right">
+        <CountUp end={100} />+ Events Managed · Trusted by 50+ Companies · Across 5 Countries
+      </div>
+
+      {/* Testimonials Carousel */}
+      <Testimonials />
+
+      {/* Gallery Images with Fade */}
+      <div className="gallery">
+        {galleryImgs.map((img, idx) => (
+          <img
+            src={img}
+            alt={`Event ${idx+1}`}
+            className="gallery-img"
+            data-aos="fade-in"
+            data-aos-delay={idx * 200}
+            key={img}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// Simple CountUp animation
+function CountUp({ end }) {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    let start = 0;
+    const interval = setInterval(() => {
+      if (start < end) {
+        start++;
+        setCount(start);
+      } else {
+        clearInterval(interval);
+      }
+    }, 20);
+    return () => clearInterval(interval);
+  }, [end]);
+  return <span className="count-up">{count}</span>;
+}
+
+// Testimonials Carousel
+function Testimonials() {
+  const testimonials = [
+    { text: "Elite Events took away all my stress!", author: "John Doe" },
+    { text: "Our company event was flawless.", author: "Priya C." },
+  ];
+  const [index, setIndex] = useState(0);
+  useEffect(() => {
+    const timer = setTimeout(() =>
+      setIndex((i) => (i + 1) % testimonials.length), 3000);
+    return () => clearTimeout(timer);
+  }, [index]);
+  return (
+    <div className="testimonials" data-aos="fade-up">
+      <h3>Testimonials</h3>
+      <div className="testimonial-text animate__animated animate__fadeIn">
+        <blockquote>
+          "{testimonials[index].text}"<br />
+          <small>-- {testimonials[index].author}</small>
+        </blockquote>
+      </div>
+    </div>
+  );
+}
