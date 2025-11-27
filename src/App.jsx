@@ -1,5 +1,7 @@
+// src/App.jsx
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -15,7 +17,8 @@ function App() {
   return (
     <Router>
       <Navbar />
-      <main className="min-h-screen bg-gray-50">
+      {/* main background kept light; individual pages handle their own layout via page-wrapper */}
+      <main className="bg-gray-50 min-h-screen">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />

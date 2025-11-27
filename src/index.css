@@ -6,39 +6,83 @@ body {
   font-family: 'Inter', sans-serif;
 }
 
-/* Custom CSS for homepage and global animations */
+/* All pages start below fixed navbar */
+.page-wrapper {
+  padding-top: 6rem; /* adjust if navbar height changes */
+}
+
+/* ====== COMMON FULLSCREEN BACKGROUND VIDEO ====== */
+
+.bg-video-wrapper,
+.bg-video-contactus {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -2;
+  overflow: hidden;
+}
+
+.bg-video,
+.contact-bg-video {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  opacity: 0.7; /* controls video transparency */
+}
+
+/* Home overlay – a bit brighter */
+.bg-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.65) 65%,
+    rgba(255, 255, 255, 0.9)
+  );
+  z-index: 1;
+}
+
+/* Contact overlay – lighter so you see more video */
+.contact-bg-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.22) 60%,
+    rgba(255, 255, 255, 0.5)
+  );
+  z-index: 1;
+}
+
+/* ====== HOMEPAGE CONTENT STYLES ====== */
+
 .homepage-container {
   position: relative;
   overflow-x: hidden;
   min-height: 100vh;
-  background: #f8f9fc;
 }
-.bg-video-wrapper {
-  position: fixed;
-  z-index: -2;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-}
-.bg-video {
-  width: 100vw;
-  height: 100vh;
-  object-fit: cover;
-  filter: brightness(0.6);
-  transition: opacity 1s;
-  opacity: 1;
-}
-.bg-overlay {
-  position: absolute;
-  top: 0; left: 0; width: 100vw; height: 100vh;
-  background: linear-gradient(to bottom, rgba(255,255,255,0.65) 65%, rgba(255,255,255,0.9));
-  z-index: 1;
-}
+
 .hero-text {
   text-align: center;
   padding: 8rem 2rem 3rem 2rem;
   color: #b8005a;
 }
+
+/* make hero padding smaller on mobile */
+@media (max-width: 640px) {
+  .hero-text {
+    padding-top: 6rem;
+  }
+}
+
 .cta-btn {
   margin-top: 2rem;
   padding: 1rem 2rem;
@@ -54,32 +98,46 @@ body {
   box-shadow: 0 6px 24px #e1cce2;
   transform: scale(1.07);
 }
+
 .service-cards {
   display: flex;
   justify-content: center;
   gap: 2rem;
   padding: 2rem 0;
 }
+/* stack cards on small screens */
+@media (max-width: 768px) {
+  .service-cards {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
 .card {
   background: #fff;
   border-radius: 12px;
-  box-shadow: 0 1px 8px rgba(0,0,0,0.07);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.07);
   padding: 2rem 2.5rem;
   min-width: 240px;
   text-align: center;
-  transition: transform 0.4s;
+  transition: transform 0.4s, box-shadow 0.4s;
 }
 .card:hover {
   transform: scale(1.05);
   box-shadow: 0 8px 32px #ecdcec;
 }
+
 .count-section {
   text-align: center;
   font-size: 1.15rem;
   margin: 2rem 0 1rem 0;
   color: #444;
 }
-.count-up { font-size: 1.3em; color: #b8005a; font-weight: bold; }
+.count-up {
+  font-size: 1.3em;
+  color: #b8005a;
+  font-weight: bold;
+}
 
 .testimonials {
   margin: 2rem auto;
@@ -101,6 +159,7 @@ body {
   justify-content: center;
   gap: 1.5rem;
   margin: 3rem 0;
+  flex-wrap: wrap;
 }
 .gallery-img {
   width: 170px;
@@ -112,23 +171,4 @@ body {
 .gallery-img:hover {
   transform: scale(1.08);
   opacity: 1;
-}
-
-/* Custom CSS for full bg video on contact us page */
-.bg-video-contactus {
-  position: fixed;
-  top: 0; left: 0; width: 100vw; height: 100vh;
-  z-index: -2;
-}
-.contact-bg-video {
-  width: 100vw;
-  height: 100vh;
-  object-fit: cover;
-  opacity: 0.70;
-}
-.contact-bg-overlay {
-  position: absolute;
-  top: 0; left: 0; width: 100vw; height: 100vh;
-  background: linear-gradient(to bottom, rgba(255,255,255,0.22) 60%, rgba(255,255,255,0.5) 100%);
-  z-index: 1;
 }

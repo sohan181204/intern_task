@@ -1,3 +1,4 @@
+// src/pages/Home.jsx
 import React, { useEffect, useState } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -6,13 +7,13 @@ import 'animate.css';
 const bgVideos = [
   '/videos/event1.mp4',
   '/videos/event2.mp4',
-  '/videos/event3.mp4'
+  '/videos/event3.mp4',
 ];
 
 const galleryImgs = [
   '/images/img1.jpg',
   '/images/img2.jpg',
-  '/images/img3.jpg'
+  '/images/img3.jpg',
 ];
 
 export default function Home() {
@@ -22,12 +23,14 @@ export default function Home() {
     AOS.init({ duration: 1200, delay: 200 });
   }, []);
 
-  // Video switching on scroll
   useEffect(() => {
     const handleScroll = () => {
       const sectionHeight = window.innerHeight * 0.8;
       const scrollPos = window.scrollY;
-      const vidIndex = Math.min(Math.floor(scrollPos / sectionHeight), bgVideos.length - 1);
+      const vidIndex = Math.min(
+        Math.floor(scrollPos / sectionHeight),
+        bgVideos.length - 1
+      );
       setCurrentVideo(vidIndex);
     };
     window.addEventListener('scroll', handleScroll);
@@ -35,8 +38,8 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="homepage-container">
-      {/* Background Video Section */}
+    <div className="page-wrapper homepage-container">
+      {/* Background Video */}
       <div className="bg-video-wrapper">
         <video
           src={bgVideos[currentVideo]}
@@ -44,55 +47,76 @@ export default function Home() {
           loop
           muted
           playsInline
-          controls={false}
           className="bg-video"
-          style={{ pointerEvents: 'none' }}
-          onError={() => console.log('Video failed to load!')}
         />
         <div className="bg-overlay" />
       </div>
 
-      {/* Hero Section */}
-      <header className="hero-text animate__animated animate__fadeInDown">
-        <h1>Unforgettable Events, Perfectly Planned</h1>
-        <p>Trusted professionals for stylish weddings, corporate events, and celebrations.</p>
-        <button className="cta-btn" data-aos="zoom-in">Get A Quote</button>
+      {/* Hero */}
+      <header className="hero-text animate__animated animate__fadeInDown relative z-10">
+        <h1 className="text-3xl md:text-4xl font-extrabold mb-2">
+          Unforgettable Events, Perfectly Planned
+        </h1>
+        <p className="text-base md:text-lg text-gray-700 max-w-2xl mx-auto">
+          Trusted professionals for stylish weddings, corporate events, and
+          private celebrations in Hyderabad and beyond.
+        </p>
+        <button className="cta-btn" data-aos="zoom-in">
+          Get A Quote
+        </button>
+
+        {/* Scroll cue */}
+        <div className="mt-6 text-sm text-gray-600 flex flex-col items-center">
+          <span>Scroll to explore</span>
+          <span className="mt-1 animate-bounce">⌄</span>
+        </div>
       </header>
 
-      {/* Service Cards */}
-      <div className="service-cards">
+      {/* Services */}
+      <div className="service-cards relative z-10 flex-wrap">
         <div className="card" data-aos="fade-up">
-          <h2>Weddings</h2>
-          <p>Venue, Decor, Artist Management</p>
+          <h2 className="font-bold text-pink-700 mb-1">Weddings</h2>
+          <p className="text-gray-700 text-sm">
+            Venue selection, décor, rituals, and artist management for dream
+            weddings.
+          </p>
         </div>
         <div className="card" data-aos="fade-up" data-aos-delay="100">
-          <h2>Corporate Events</h2>
-          <p>Conferences, Launches, Team Building</p>
+          <h2 className="font-bold text-pink-700 mb-1">Corporate Events</h2>
+          <p className="text-gray-700 text-sm">
+            Conferences, product launches, and team experiences with flawless
+            logistics.
+          </p>
         </div>
         <div className="card" data-aos="fade-up" data-aos-delay="200">
-          <h2>Private Parties</h2>
-          <p>Birthdays, Anniversaries, Celebrations</p>
+          <h2 className="font-bold text-pink-700 mb-1">Private Parties</h2>
+          <p className="text-gray-700 text-sm">
+            Birthdays, anniversaries, and home gatherings with curated themes.
+          </p>
         </div>
       </div>
 
-      {/* Animated Statistic */}
-      <div className="count-section" data-aos="fade-right">
-        <CountUp end={100} />+ Events Managed · Trusted by 50+ Companies · Across 5 Countries
+      {/* Stats */}
+      <div className="count-section relative z-10" data-aos="fade-right">
+        <CountUp end={100} />+ Events Managed · Trusted by 50+ Companies · Across
+        5 Countries
       </div>
 
-      {/* Testimonials Carousel */}
-      <Testimonials />
+      {/* Testimonials */}
+      <div className="relative z-10">
+        <Testimonials />
+      </div>
 
-      {/* Gallery Images with Fade */}
-      <div className="gallery">
+      {/* Gallery */}
+      <div className="gallery relative z-10">
         {galleryImgs.map((img, idx) => (
           <img
+            key={img}
             src={img}
-            alt={`Event ${idx+1}`}
+            alt={`Event ${idx + 1}`}
             className="gallery-img"
             data-aos="fade-in"
             data-aos-delay={idx * 200}
-            key={img}
           />
         ))}
       </div>
@@ -100,7 +124,6 @@ export default function Home() {
   );
 }
 
-// Simple CountUp animation
 function CountUp({ end }) {
   const [count, setCount] = useState(0);
   useEffect(() => {
@@ -118,24 +141,26 @@ function CountUp({ end }) {
   return <span className="count-up">{count}</span>;
 }
 
-// Testimonials Carousel
 function Testimonials() {
   const testimonials = [
-    { text: "Elite Events took away all my stress!", author: "John Doe" },
-    { text: "Our company event was flawless.", author: "Priya C." },
+    { text: 'Elite Events took away all my stress!', author: 'John Doe' },
+    { text: 'Our company event was flawless.', author: 'Priya C.' },
   ];
   const [index, setIndex] = useState(0);
   useEffect(() => {
-    const timer = setTimeout(() =>
-      setIndex((i) => (i + 1) % testimonials.length), 3000);
+    const timer = setTimeout(
+      () => setIndex((i) => (i + 1) % testimonials.length),
+      3000
+    );
     return () => clearTimeout(timer);
   }, [index]);
   return (
     <div className="testimonials" data-aos="fade-up">
-      <h3>Testimonials</h3>
+      <h3 className="text-pink-700 font-bold mb-2">Testimonials</h3>
       <div className="testimonial-text animate__animated animate__fadeIn">
         <blockquote>
-          "{testimonials[index].text}"<br />
+          "{testimonials[index].text}"
+          <br />
           <small>-- {testimonials[index].author}</small>
         </blockquote>
       </div>

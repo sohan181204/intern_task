@@ -1,3 +1,4 @@
+// src/pages/About.jsx
 import React, { useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -5,7 +6,7 @@ import 'aos/dist/aos.css';
 const teamMembers = [
   { name: 'Sohan Kumar', role: 'Founder & CEO', img: '/images/team1.jpg' },
   { name: 'Priya C.', role: 'Event Manager', img: '/images/team2.jpg' },
-  { name: 'John Doe', role: 'Creative Lead', img: '/images/team3.jpg' }
+  { name: 'John Doe', role: 'Creative Lead', img: '/images/team3.jpg' },
 ];
 
 export default function About() {
@@ -14,16 +15,23 @@ export default function About() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50 px-5 py-10">
+    <div className="page-wrapper min-h-screen bg-gray-50 px-5 py-10">
       {/* Heading */}
-      <h1 className="text-4xl font-bold text-pink-700 text-center mb-6" data-aos="fade-down">
+      <h1
+        className="text-4xl font-bold text-pink-700 text-center mb-6"
+        data-aos="fade-down"
+      >
         About Us
       </h1>
 
       {/* Intro/Story */}
-      <p className="max-w-2xl mx-auto text-center text-lg text-gray-700 mb-8" data-aos="fade-in">
-        Elite Events brings you exceptional service, professionalism, and creativity.
-        Our commitment: your vision executed with passion and precision.
+      <p
+        className="max-w-2xl mx-auto text-center text-lg text-gray-700 mb-8"
+        data-aos="fade-in"
+      >
+        Elite Events brings you exceptional service, professionalism, and
+        creativity. Our commitment: your vision executed with passion and
+        precision.
       </p>
 
       {/* Mission, Vision, Values */}
@@ -56,7 +64,10 @@ export default function About() {
       </div>
 
       {/* Team Section */}
-      <h2 className="text-2xl font-semibold text-pink-700 text-center mb-4" data-aos="fade-down">
+      <h2
+        className="text-2xl font-semibold text-pink-700 text-center mb-4"
+        data-aos="fade-down"
+      >
         Meet The Team
       </h2>
       <div className="flex flex-wrap justify-center gap-8 mb-12">
@@ -72,7 +83,9 @@ export default function About() {
               alt={tm.name}
               className="rounded-full w-20 h-20 mb-3 object-cover border-4 border-pink-200"
             />
-            <h3 className="font-bold text-lg text-gray-800 mb-1">{tm.name}</h3>
+            <h3 className="font-bold text-lg text-gray-800 mb-1">
+              {tm.name}
+            </h3>
             <p className="text-pink-600 font-medium">{tm.role}</p>
           </div>
         ))}
@@ -85,7 +98,10 @@ export default function About() {
 
       {/* Call to Action */}
       <div className="text-center mt-10" data-aos="fade-up">
-        <a href="/contact" className="inline-block bg-pink-700 text-white rounded-lg px-8 py-3 font-bold shadow hover:bg-pink-800 transition">
+        <a
+          href="/contact"
+          className="inline-block bg-pink-700 text-white rounded-lg px-8 py-3 font-bold shadow hover:bg-pink-800 transition"
+        >
           Contact Us Today
         </a>
       </div>
@@ -107,7 +123,6 @@ function InfoCard({ title, icon, text, aos }) {
 }
 
 function StatCounter({ value, label }) {
-  // Simple count up animation
   const [count, setCount] = React.useState(0);
   React.useEffect(() => {
     let i = 0;
@@ -118,6 +133,7 @@ function StatCounter({ value, label }) {
     }, 18);
     return () => clearInterval(interval);
   }, [value]);
+
   return (
     <div className="flex flex-col items-center" data-aos="fade-up">
       <span className="text-3xl text-pink-700 font-bold mb-1">{count}</span>
@@ -126,26 +142,27 @@ function StatCounter({ value, label }) {
   );
 }
 
-// Simple auto-switch testimonial carousel
 function Testimonials() {
   const testimonials = [
     {
-      text: "Elite Events took away all my stress! Superb planning.",
-      author: "John Doe"
+      text: 'Elite Events took away all my stress! Superb planning.',
+      author: 'John Doe',
     },
     {
-      text: "Our company event was flawless. Thank you!",
-      author: "Priya C."
-    }
+      text: 'Our company event was flawless. Thank you!',
+      author: 'Priya C.',
+    },
   ];
   const [index, setIndex] = React.useState(0);
+
   React.useEffect(() => {
     const timer = setTimeout(
-      () => setIndex(i => (i + 1) % testimonials.length),
+      () => setIndex((i) => (i + 1) % testimonials.length),
       3500
     );
     return () => clearTimeout(timer);
   }, [index]);
+
   return (
     <div className="bg-white shadow rounded-lg p-6" data-aos="fade-up">
       <h3 className="text-pink-700 font-bold mb-3">Testimonials</h3>
@@ -153,7 +170,9 @@ function Testimonials() {
         <blockquote className="italic text-gray-700">
           "{testimonials[index].text}"
         </blockquote>
-        <div className="mt-2 text-right text-gray-500">-- {testimonials[index].author}</div>
+        <div className="mt-2 text-right text-gray-500">
+          -- {testimonials[index].author}
+        </div>
       </div>
     </div>
   );

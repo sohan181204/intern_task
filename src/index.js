@@ -1,9 +1,13 @@
+// src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import './index.css';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+// Create React 18 root and render the app
+const rootElement = document.getElementById('root');
+const root = ReactDOM.createRoot(rootElement);
+
 root.render(
   <React.StrictMode>
     <App />
