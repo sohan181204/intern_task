@@ -8,10 +8,10 @@ body {
 
 /* All pages start below fixed navbar */
 .page-wrapper {
-  padding-top: 6rem; /* adjust if navbar height changes */
+  padding-top: 6rem;
 }
 
-/* ====== COMMON FULLSCREEN BACKGROUND VIDEO ====== */
+/* ====== FULLSCREEN BACKGROUND VIDEO (HOME + CONTACT) ====== */
 
 .bg-video-wrapper,
 .bg-video-contactus {
@@ -29,10 +29,10 @@ body {
   width: 100vw;
   height: 100vh;
   object-fit: cover;
-  opacity: 0.7; /* controls video transparency */
+  opacity: 1; /* video fully visible */
 }
 
-/* Home overlay – a bit brighter */
+/* Home overlay – lighter so video shows, text still readable */
 .bg-overlay {
   position: absolute;
   top: 0;
@@ -41,13 +41,13 @@ body {
   height: 100vh;
   background: linear-gradient(
     to bottom,
-    rgba(255, 255, 255, 0.65) 65%,
-    rgba(255, 255, 255, 0.9)
+    rgba(255, 255, 255, 0.25) 55%,
+    rgba(255, 255, 255, 0.6)
   );
   z-index: 1;
 }
 
-/* Contact overlay – lighter so you see more video */
+/* Contact overlay – keep a bit softer */
 .contact-bg-overlay {
   position: absolute;
   top: 0;
@@ -76,7 +76,6 @@ body {
   color: #b8005a;
 }
 
-/* make hero padding smaller on mobile */
 @media (max-width: 640px) {
   .hero-text {
     padding-top: 6rem;
@@ -105,7 +104,6 @@ body {
   gap: 2rem;
   padding: 2rem 0;
 }
-/* stack cards on small screens */
 @media (max-width: 768px) {
   .service-cards {
     flex-direction: column;
